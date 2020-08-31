@@ -59,7 +59,7 @@ jobs:
       - name: Build and push
         run: |
           source spack/share/spack/setup-env.sh
-          for pkg in zlib cmake
+          for pkg in zlib cmake python
           do
             spack install $pkg target=${{ matrix.target }}
             spack buildcache create -a --mirror-url ${{ secrets.S3_BUCKET }} target=${{ matrix.target }}
