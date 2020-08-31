@@ -1,5 +1,6 @@
 zlib
 xz
+tar
 pkgconf
 berkeley-db
 gdbm
