@@ -17,6 +17,9 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -59,11 +62,11 @@ jobs:
       - name: Build and push
         run: |
           source spack/share/spack/setup-env.sh
-          for pkg in zlib cmake python
+          while read pkg
           do
             spack install $pkg target=${{ matrix.target }}
             spack buildcache create -a --mirror-url ${{ secrets.S3_BUCKET }} target=${{ matrix.target }}
-          done
+          done <packages.txt
 
   reindex:
     needs: build_and_push
