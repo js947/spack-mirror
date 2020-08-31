@@ -1,4 +1,4 @@
-name: zlib
+name: Build - specific targets
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
     - cron: "0 2 * * *"
 
 jobs:
-  build_and_push:
+  specific:
     strategy:
       matrix:
         os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
@@ -17,9 +17,9 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     env:
-      PKG: zlib target=${{ matrix.target }}
+      PKGS: zlib cmake
 
-    steps:
+    steps: &build_steps
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -68,8 +68,22 @@ jobs:
             spack buildcache create -a --mirror-url ${{ secrets.S3_BUCKET }} $target=${{ matrix.target }}
           done
 
+  generic:
+    strategy:
+      matrix:
+        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04]
+        target: [x86_64]
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      PKGS: perl
+
+    steps: *build_steps
+
+
   reindex:
-    needs: build_and_push
+    needs: [specific, generic]
 
     runs-on: ubuntu-latest
 
