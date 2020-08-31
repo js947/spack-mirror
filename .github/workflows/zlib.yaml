@@ -62,8 +62,11 @@ jobs:
       - name: Build and push
         run: |
           source spack/share/spack/setup-env.sh
-          spack install $PKG
-          spack buildcache create -a --mirror-url ${{ secrets.S3_BUCKET }} $PKG
+          for pkg in zlib cmake
+          do
+            spack install $pkg target=${{ matrix.target }}
+            spack buildcache create -a --mirror-url ${{ secrets.S3_BUCKET }} $target=${{ matrix.target }}
+          done
 
   reindex:
     needs: build_and_push
