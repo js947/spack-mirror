@@ -1,7 +1,14 @@
 zlib
+xz
 pkgconf
 berkeley-db
 gdbm
 perl
 python
+m4
+autoconf
+automake
+libtool
+findutils
 cmake
+mpich
