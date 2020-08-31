@@ -1,4 +1,4 @@
-name: Build - specific targets
+name: Build
 
 on:
   push:
