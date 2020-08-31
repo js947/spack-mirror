@@ -1,4 +1,4 @@
-name: zlib
+name: cmake
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     env:
-      PKG: zlib target=${{ matrix.target }}
+      PKG: cmake target=${{ matrix.target }}
 
     steps:
       - name: Setup Python
