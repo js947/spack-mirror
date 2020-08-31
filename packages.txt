@@ -1,6 +1,8 @@
 zlib
 xz
 tar
+diffutils
+bzip2
 pkgconf
 berkeley-db
 gdbm
