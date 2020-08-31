@@ -1,5 +1,7 @@
 zlib
 pkgconf
 berkeley-db
-cmake
+gdbm
+perl
 python
+cmake
