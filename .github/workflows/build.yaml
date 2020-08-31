@@ -66,7 +66,7 @@ jobs:
           done
 
   reindex:
-    needs: [specific, generic]
+    needs: build_and_push
 
     runs-on: ubuntu-latest
 
