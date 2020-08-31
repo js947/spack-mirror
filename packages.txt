@@ -1,3 +1,5 @@
 zlib
+pkgconf
+berkeley-db
 cmake
 python
