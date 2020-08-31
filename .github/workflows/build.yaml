@@ -65,7 +65,7 @@ jobs:
           while read pkg
           do
             spack install $pkg target=${{ matrix.target }}
-            spack buildcache create -a --mirror-url ${{ secrets.S3_BUCKET }} target=${{ matrix.target }}
+            spack buildcache create -a --mirror-url ${{ secrets.S3_BUCKET }} $pkg target=${{ matrix.target }}
           done <packages.txt
 
   reindex:
