@@ -64,3 +64,41 @@ jobs:
           source spack/share/spack/setup-env.sh
           spack install $PKG
           spack buildcache create -a --mirror-url ${{ secrets.S3_BUCKET }} $PKG
+
+  reindex:
+    needs: build_and_push
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+
+
+      - name: Install boto3
+        run: python -m pip install boto3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+
+      - name: Get Spack
+        uses: actions/checkout@v2
+        with:
+          path: ./spack
+          repository: spack/spack
+          ref: develop
+
+      - name: Update index
+        run: |
+          source spack/share/spack/setup-env.sh
+          spack buildcache update-index --mirror-url ${{ secrets.S3_BUCKET }}
