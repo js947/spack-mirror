@@ -62,7 +62,7 @@ jobs:
           for pkg in zlib cmake
           do
             spack install $pkg target=${{ matrix.target }}
-            spack buildcache create -a --mirror-url ${{ secrets.S3_BUCKET }} $target=${{ matrix.target }}
+            spack buildcache create -a --mirror-url ${{ secrets.S3_BUCKET }} target=${{ matrix.target }}
           done
 
   reindex:
